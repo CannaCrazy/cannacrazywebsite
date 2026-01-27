@@ -1,20 +1,40 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# CannaCrazy - The Digital Budtender Experience
 
-# Run and deploy your AI Studio app
+Welcome to **CannaCrazy**, the world's first streetwear-inspired cannabis ecosystem. This React application features a "Digital Budtender" powered by Google Gemini AI to recommend strains based on user vibe, energy, and flavor preferences.
 
-This contains everything you need to run your app locally.
+## 🚀 Features
 
-View your app in AI Studio: https://ai.studio/apps/drive/1Hk67H1y1wYPEwB2iCQhKLo_PXY78UuJR
+- **Digital Budtender**: AI-powered strain recommendations.
+- **Streetwear Aesthetic**: High-contrast, neon-infused design with glassmorphism and kinetic typography.
+- **Dynamic Cart**: Seamless shopping experience with local storage persistence.
+- **Responsive Design**: Mobile-first approach with smooth interactions.
 
-## Run Locally
+## 🛠️ Tech Stack
 
-**Prerequisites:**  Node.js
+- **Framework**: React 19 + Vite
+- **AI**: Google Gemini Flash 1.5
+- **Styling**: Tailwind CSS (CDN/Custom) + Vanilla CSS animations
+- **Language**: TypeScript
 
+## 📦 Run Locally
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+2. **Setup Environment**:
+   Create a `.env.local` file and add your Gemini API key:
+   ```env
+   VITE_GEMINI_API_KEY=your_api_key_here
+   ```
+
+3. **Start the Dev Server**:
+   ```bash
+   npm run dev
+   ```
+
+## 🎨 Design System
+
+- **Colors**: Neon Green (`#39FF14`), Purple (`#BC13FE`), Electric Blue (`#00D2FF`)
+- **Fonts**: *Permanent Marker* (Headings), *Inter* (Body)
