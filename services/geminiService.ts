@@ -3,8 +3,8 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { UserPreferences, StrainRecommendation } from "../types";
 
 export const getBudtenderRecommendations = async (prefs: UserPreferences): Promise<StrainRecommendation[]> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
-  
+  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+
   const prompt = `You are a legendary Digital Budtender at CannaCrazy. 
   Based on these customer vibes:
   Mood: ${prefs.mood}
@@ -17,7 +17,7 @@ export const getBudtenderRecommendations = async (prefs: UserPreferences): Promi
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-1.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
