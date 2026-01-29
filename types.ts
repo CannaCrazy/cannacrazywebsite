@@ -18,10 +18,15 @@ export interface UserPreferences {
 export interface Product {
   id: string;
   title: string;
-  price: number;
+  // price: number; // Removed as per request
   color: string;
   image: string;
-  category?: string;
+  category?: 'flower' | 'preroll' | 'edible' | 'cbd' | 'merch';
+  growType?: 'Indoor' | 'Greenhouse' | 'Sun-Grown';
+  potency?: string;
+  effects?: string[];
+  strength?: 'Mild' | 'Medium' | 'Heavy' | 'Nuclear';
+  description?: string;
 }
 
 export interface CartItem extends Product {

@@ -34,10 +34,15 @@ export const Budtender: React.FC<BudtenderProps> = ({ onAddToCart }) => {
     onAddToCart({
       id: `ai-${strain.name.toLowerCase().replace(/\s+/g, '-')}`,
       title: strain.name,
-      price: 20, // Default price for recommended premium strains
+      // price: 20, // Removed via refactor
       color: strain.type === 'Sativa' ? '#39FF14' : strain.type === 'Indica' ? '#BC13FE' : '#FBFF00',
       image: "https://images.unsplash.com/photo-1603909223429-69bb7101f420?auto=format&fit=crop&q=80&w=800",
-      category: 'Specialty'
+      category: 'flower',
+      potency: strain.thc,
+      growType: 'Indoor',
+      strength: 'Heavy',
+      effects: strain.effects,
+      description: strain.description
     });
   };
 
@@ -46,7 +51,7 @@ export const Budtender: React.FC<BudtenderProps> = ({ onAddToCart }) => {
       {step < 4 && (
         <div className="text-center">
           <h2 className="text-4xl mb-8 neon-text-green">Ask the Budtender</h2>
-          
+
           {step === 0 && (
             <div className="space-y-6">
               <p className="text-xl body-font mb-4">What's the vibe, fam?</p>
@@ -54,7 +59,7 @@ export const Budtender: React.FC<BudtenderProps> = ({ onAddToCart }) => {
                 {moods.map(m => (
                   <button
                     key={m}
-                    onClick={() => { setPrefs({...prefs, mood: m}); setStep(1); }}
+                    onClick={() => { setPrefs({ ...prefs, mood: m }); setStep(1); }}
                     className="px-6 py-3 bg-black border-2 border-purple-500 rounded-full hover:bg-purple-500 hover:text-black transition-all transform hover:-translate-y-1 active:scale-95"
                   >
                     {m}
@@ -67,13 +72,13 @@ export const Budtender: React.FC<BudtenderProps> = ({ onAddToCart }) => {
           {step === 1 && (
             <div className="space-y-6">
               <p className="text-xl body-font mb-4">Energy Level (1-10)</p>
-              <input 
+              <input
                 type="range" min="1" max="10" value={prefs.energy}
-                onChange={(e) => setPrefs({...prefs, energy: parseInt(e.target.value)})}
+                onChange={(e) => setPrefs({ ...prefs, energy: parseInt(e.target.value) })}
                 className="w-full h-4 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-[#39FF14]"
               />
               <div className="text-3xl font-bold text-[#39FF14]">{prefs.energy}</div>
-              <button 
+              <button
                 onClick={() => setStep(2)}
                 className="mt-8 px-10 py-4 bg-[#39FF14] text-black font-bold rounded-full hover:shadow-[0_0_20px_#39FF14]"
               >
@@ -89,7 +94,7 @@ export const Budtender: React.FC<BudtenderProps> = ({ onAddToCart }) => {
                 {goals.map(g => (
                   <button
                     key={g}
-                    onClick={() => { setPrefs({...prefs, goal: g}); setStep(3); }}
+                    onClick={() => { setPrefs({ ...prefs, goal: g }); setStep(3); }}
                     className="px-6 py-3 bg-black border-2 border-blue-500 rounded-full hover:bg-blue-500 hover:text-black transition-all transform hover:-translate-y-1"
                   >
                     {g}
@@ -106,14 +111,14 @@ export const Budtender: React.FC<BudtenderProps> = ({ onAddToCart }) => {
                 {flavors.map(f => (
                   <button
                     key={f}
-                    onClick={() => setPrefs({...prefs, flavor: f})}
+                    onClick={() => setPrefs({ ...prefs, flavor: f })}
                     className={`px-6 py-3 bg-black border-2 rounded-full transition-all ${prefs.flavor === f ? 'border-[#FBFF00] bg-[#FBFF00] text-black' : 'border-[#FBFF00] hover:bg-[#FBFF00]/20'}`}
                   >
                     {f}
                   </button>
                 ))}
               </div>
-              <button 
+              <button
                 onClick={handlePredict}
                 className="mt-8 px-12 py-5 bg-[#BC13FE] text-white font-bold rounded-full text-2xl hover:scale-105 transition-transform shadow-[0_0_30px_#BC13FE]"
               >
@@ -145,7 +150,7 @@ export const Budtender: React.FC<BudtenderProps> = ({ onAddToCart }) => {
                         <span key={e} className="text-[10px] px-2 py-1 bg-white/10 rounded-full border border-white/20 uppercase">{e}</span>
                       ))}
                     </div>
-                    <button 
+                    <button
                       onClick={() => handleAddRecommendation(strain)}
                       className="w-full py-3 bg-white/10 hover:bg-[#39FF14] hover:text-black rounded-xl font-bold transition-all uppercase text-xs"
                     >
@@ -154,7 +159,7 @@ export const Budtender: React.FC<BudtenderProps> = ({ onAddToCart }) => {
                   </div>
                 ))}
               </div>
-              <button 
+              <button
                 onClick={() => setStep(0)}
                 className="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-full transition-all"
               >

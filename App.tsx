@@ -1,34 +1,26 @@
-
 import React, { useState, useEffect } from 'react';
 import { BackgroundEffects } from './components/BackgroundEffects';
 import { Budtender } from './components/StrainPicker';
 import { Cart } from './components/Cart';
+import { ProductScroll } from './components/ProductScroll';
+import { ProductModal } from './components/ProductModal';
+import { JoinFormModal } from './components/JoinFormModal';
+import { FAQSection } from './components/FAQSection';
+import { PickupCheckout } from './components/PickupCheckout';
 import { Product, CartItem } from './types';
+import flowerImg from './Images/Flower.jpeg';
+// Import Data
+import { FLOWERS, PREROLLS, EDIBLES, CBD } from './data/products';
 
-const ProductCard: React.FC<{
-  product: Product;
-  onAddToCart: (p: Product) => void;
-}> = ({ product, onAddToCart }) => (
-  <div className="bg-[#111]/40 backdrop-blur-md p-6 rounded-[2.5rem] border-2 border-white/5 hover:border-white/20 hover:scale-[1.02] transition-all group overflow-hidden shadow-2xl">
-    <div className="relative mb-6 overflow-hidden rounded-2xl">
-      <img src={product.image} className="w-full h-64 object-cover group-hover:rotate-3 group-hover:scale-110 transition-transform duration-700" alt={product.title} />
-      <div className={`absolute top-4 right-4 px-4 py-1 rounded-full font-bold text-black shadow-lg`} style={{ backgroundColor: product.color }}>
-        ${product.price}
-      </div>
-    </div>
-    <h3 className="text-3xl mb-4 group-hover:neon-text-green transition-all group-hover:translate-x-2 duration-300">{product.title}</h3>
-    <button
-      onClick={() => onAddToCart(product)}
-      className="w-full py-4 rounded-xl font-bold bg-white/5 hover:bg-white text-white hover:text-black transition-all uppercase tracking-widest text-sm border border-white/10 active:scale-95 shadow-[4px_4px_0px_0px_rgba(57,255,20,0.3)]"
-    >
-      Grab It
-    </button>
-  </div>
-);
 
 const App: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // New State
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+  const [isPickupOpen, setIsPickupOpen] = useState(false);
 
   // Load cart from local storage on mount
   useEffect(() => {
@@ -86,6 +78,25 @@ const App: React.FC = () => {
         items={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
         onRemove={handleRemoveItem}
+        onCheckout={() => setIsPickupOpen(true)}
+      />
+
+      <ProductModal
+        isOpen={!!selectedProduct}
+        product={selectedProduct}
+        onClose={() => setSelectedProduct(null)}
+        onAddToCart={handleAddToCart}
+      />
+
+      <JoinFormModal
+        isOpen={isJoinModalOpen}
+        onClose={() => setIsJoinModalOpen(false)}
+      />
+
+      <PickupCheckout
+        isOpen={isPickupOpen}
+        onClose={() => setIsPickupOpen(false)}
+        items={cartItems}
       />
 
       {/* Navigation */}
@@ -96,6 +107,7 @@ const App: React.FC = () => {
           <a href="#budtender" className="hover:neon-text-purple transition-all">Budtender</a>
           <a href="#shop" className="hover:neon-text-yellow transition-all">Shop</a>
           <a href="#specialty" className="hover:neon-text-blue transition-all">Specialty</a>
+          <a href="#faq" className="hover:text-white transition-all">FAQ</a>
         </div>
 
         <div className="flex items-center gap-6">
@@ -110,7 +122,10 @@ const App: React.FC = () => {
               </span>
             )}
           </button>
-          <button className="hidden sm:block px-6 py-2 bg-[#39FF14] text-black font-black rounded-full hover:scale-105 active:scale-95 transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]">
+          <button
+            onClick={() => setIsJoinModalOpen(true)}
+            className="hidden sm:block px-6 py-2 bg-[#39FF14] text-black font-black rounded-full hover:scale-105 active:scale-95 transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]"
+          >
             JOIN THE FAM
           </button>
         </div>
@@ -118,13 +133,13 @@ const App: React.FC = () => {
 
       {/* Hero Section */}
       <section className="relative pt-40 pb-20 px-6 min-h-screen flex flex-col items-center justify-center text-center">
-        <div className="max-w-5xl">
+        <div className="max-w-6xl">
           <h1 className="text-7xl md:text-9xl mb-6 leading-tight">
-            ELEVATE YOUR <span className="text-[#39FF14]">HIGH</span> & JOIN THE FAM
+            ELEVATE YOUR <span className="text-[#39FF14]">HIGH</span> &<br /> GO KINDA CRAZY
           </h1>
           <p className="text-xl md:text-3xl body-font max-w-3xl mx-auto mb-12 opacity-80 leading-relaxed">
-            The world's first streetwear-inspired cannabis ecosystem.
-            No more guessing. Just perfect vibes, suggested by our Digital Budtender.
+            Welcome to the CannaCrazy Social Club. A curated sanctuary where premium genetics meet authentic connection.
+            We're a tight-knit collective open to all who vibe—come for the stash, stay for the family.
           </p>
           <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
             <a href="#budtender" className="px-12 py-6 bg-[#BC13FE] text-white text-2xl font-black rounded-2xl shadow-[8px_8px_0px_0px_rgba(57,255,20,0.5)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none active:scale-95 transition-all uppercase tracking-tighter hover:rotate-1">
@@ -185,55 +200,61 @@ const App: React.FC = () => {
 
       {/* Shop Sections */}
       <section id="shop" className="py-20 px-6">
-        <div className="max-w-7xl mx-auto space-y-32">
+        <div className="max-w-[1920px] mx-auto space-y-32">
+
+          {/* FLOWER / BUD */}
+          <div>
+            <div className="max-w-7xl mx-auto flex items-end gap-6 mb-12">
+              <h2 className="text-6xl md:text-8xl text-white">FLOWER / BUD</h2>
+              <div className="mb-4 text-gray-500 font-bold uppercase tracking-widest hidden md:block">[ TOP SHELF ]</div>
+            </div>
+            <ProductScroll
+              items={FLOWERS}
+              onProductClick={setSelectedProduct}
+            />
+          </div>
 
           {/* PRE-ROLLS */}
           <div>
-            <div className="flex items-end gap-6 mb-12">
+            <div className="max-w-7xl mx-auto flex items-end gap-6 mb-12">
               <h2 className="text-6xl md:text-8xl text-[#39FF14]">PRE-ROLLS</h2>
               <div className="mb-4 text-gray-500 font-bold uppercase tracking-widest hidden md:block">[ READY TO SPARK ]</div>
             </div>
-            <div className="grid md:grid-cols-3 gap-8">
-              <ProductCard
-                onAddToCart={handleAddToCart}
-                product={{ id: 'pr-1', title: "Graffiti Glaze", price: 15, color: "#39FF14", image: "https://images.unsplash.com/photo-1619374092790-a7b32d164f9b?auto=format&fit=crop&q=80&w=800" }}
-              />
-              <ProductCard
-                onAddToCart={handleAddToCart}
-                product={{ id: 'pr-2', title: "Neon Nightcap", price: 12, color: "#BC13FE", image: "https://images.unsplash.com/photo-1596272782704-58580629a888?auto=format&fit=crop&q=80&w=800" }}
-              />
-              <ProductCard
-                onAddToCart={handleAddToCart}
-                product={{ id: 'pr-3', title: "Street Haze", price: 18, color: "#FBFF00", image: "https://images.unsplash.com/photo-1628103130182-3e284a14896d?auto=format&fit=crop&q=80&w=800" }}
-              />
-            </div>
+            <ProductScroll
+              items={PREROLLS}
+              onProductClick={setSelectedProduct}
+              color="#39FF14"
+            />
           </div>
 
           {/* EDIBLES */}
           <div className="relative">
-            <div className="absolute -top-10 -right-10 text-[10rem] opacity-5 pointer-events-none select-none heading-font text-[#FBFF00]">CANDY</div>
-            <div className="flex items-end gap-6 mb-12">
+            <div className="max-w-7xl mx-auto flex items-end gap-6 mb-12">
               <h2 className="text-6xl md:text-8xl text-[#FBFF00]">EDIBLES</h2>
               <div className="mb-4 text-gray-500 font-bold uppercase tracking-widest hidden md:block">[ BOLD FLAVORS ]</div>
             </div>
-            <div className="grid md:grid-cols-3 gap-8">
-              <ProductCard
-                onAddToCart={handleAddToCart}
-                product={{ id: 'ed-1', title: "Static Gummies", price: 25, color: "#FBFF00", image: "https://images.unsplash.com/photo-1591871937573-74dbba515c4c?auto=format&fit=crop&q=80&w=800" }}
-              />
-              <ProductCard
-                onAddToCart={handleAddToCart}
-                product={{ id: 'ed-2', title: "Chaos Crunch", price: 30, color: "#FF8C00", image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?auto=format&fit=crop&q=80&w=800" }}
-              />
-              <ProductCard
-                onAddToCart={handleAddToCart}
-                product={{ id: 'ed-3', title: "Hyper Chews", price: 22, color: "#39FF14", image: "https://images.unsplash.com/photo-1582050041567-9cfdd33e3b86?auto=format&fit=crop&q=80&w=800" }}
-              />
+            <ProductScroll
+              items={EDIBLES}
+              onProductClick={setSelectedProduct}
+              color="#FBFF00"
+            />
+          </div>
+
+          {/* CBD SECTION */}
+          <div>
+            <div className="max-w-7xl mx-auto flex items-end gap-6 mb-12">
+              <h2 className="text-6xl md:text-8xl text-white">CBD & WELLNESS</h2>
+              <div className="mb-4 text-gray-500 font-bold uppercase tracking-widest hidden md:block">[ RELAX & RESTORE ]</div>
             </div>
+            <ProductScroll
+              items={CBD}
+              onProductClick={setSelectedProduct}
+              color="#FFF"
+            />
           </div>
 
           {/* Specialty */}
-          <div id="specialty">
+          <div id="specialty" className="max-w-7xl mx-auto">
             <div className="flex items-end gap-6 mb-12">
               <h2 className="text-6xl md:text-8xl text-[#00D2FF]">SPECIALTY</h2>
               <div className="mb-4 text-gray-500 font-bold uppercase tracking-widest hidden md:block">[ RARE FINDS ]</div>
@@ -245,14 +266,18 @@ const App: React.FC = () => {
                   <h3 className="text-5xl md:text-7xl group-hover:neon-text-blue transition-all">THE VAULT BOX</h3>
                   <p className="text-xl body-font text-gray-400">Our signature collection featuring 1oz of rare genetics, limited edition streetwear, and a signed piece of digital art.</p>
                   <button
-                    onClick={() => handleAddToCart({ id: 'vault-1', title: 'The Vault Box', price: 250, color: '#00D2FF', image: 'https://images.unsplash.com/photo-1605152276897-4f618f831968?auto=format&fit=crop&q=80&w=800' })}
+                    onClick={() => handleAddToCart({
+                      id: 'vault-1', title: 'The Vault Box', color: '#00D2FF', image: flowerImg,
+                      description: "The ultimate collector's item.",
+                      category: 'merch', strength: 'Nuclear', growType: 'Indoor'
+                    })}
                     className="px-12 py-5 bg-[#00D2FF] text-black text-2xl font-black rounded-2xl hover:scale-105 transition-all"
                   >
-                    ADD TO CART
+                    ADD TO RESERVATION
                   </button>
                 </div>
                 <div className="flex-1 relative z-10">
-                  <img src="https://images.unsplash.com/photo-1605152276897-4f618f831968?auto=format&fit=crop&q=80&w=800" className="rounded-3xl shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-700" alt="Vault" />
+                  <img src={flowerImg} className="rounded-3xl shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-700" alt="Vault" />
                 </div>
                 <div className="absolute top-0 right-0 p-10 text-[15rem] heading-font opacity-5 select-none leading-none">RARE</div>
               </div>
@@ -260,6 +285,9 @@ const App: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <FAQSection />
 
       {/* Social Proof */}
       <section id="fam" className="py-32 px-6 overflow-hidden">
@@ -283,16 +311,12 @@ const App: React.FC = () => {
         <p className="text-2xl body-font max-w-2xl mb-12 font-bold uppercase">
           JOIN 50,000+ CANNACRAZY MEMBERS GETTING EXCLUSIVE DEALS EVERY MONTH.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
-          <input
-            type="email"
-            placeholder="YOUR EMAIL"
-            className="flex-1 px-8 py-5 bg-white border-4 border-black text-black font-bold placeholder-black/50 outline-none rounded-2xl"
-          />
-          <button className="px-10 py-5 bg-black text-white font-black text-xl rounded-2xl shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:scale-105 active:scale-95 transition-all">
-            ENLIST
-          </button>
-        </div>
+        <button
+          onClick={() => setIsJoinModalOpen(true)}
+          className="px-10 py-5 bg-black text-white font-black text-xl rounded-2xl shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:scale-105 active:scale-95 transition-all"
+        >
+          ENLIST
+        </button>
         <p className="mt-8 text-sm opacity-60 font-bold tracking-widest uppercase">
           *Must be 21+. Enjoy responsibly.
         </p>
