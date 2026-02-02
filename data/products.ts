@@ -6,32 +6,77 @@ import flower1Img from '../Images/Flower1.jpeg';
 import flower2Img from '../Images/Flower2.jpeg';
 import vapeImg from '../Images/710 Vapes.jpeg';
 
-export const FLOWERS: Product[] = [
+export const FLOWERS_GREENHOUSE: Product[] = [
     {
-        id: 'fl-1', title: "Graffiti Glaze", color: "#39FF14", image: flowerImg, category: 'flower',
+        id: 'fl-gh-1', title: "Sun Kissed Haze", color: "#FBFF00", image: flower2Img, category: 'flower', grade: 'Greenhouse',
+        growType: 'Greenhouse', potency: '18% THC', strength: 'Mild',
+        description: "Naturally grown under the sun. Mild buzz, great flavor.",
+        effects: ['Happy', 'Social']
+    },
+    {
+        id: 'fl-gh-2', title: "Nature's Gift", color: "#39FF14", image: flower2Img, category: 'flower', grade: 'Greenhouse',
+        growType: 'Greenhouse', potency: '16% THC', strength: 'Mild',
+        description: "Budget friendly, perfect for rolling massive joints.",
+        effects: ['Relaxed', 'Mellow']
+    },
+    {
+        id: 'fl-gh-3', title: "Buzz Light", color: "#BC13FE", image: flower2Img, category: 'flower', grade: 'Greenhouse',
+        growType: 'Greenhouse', potency: '19% THC', strength: 'Medium',
+        description: "A solid daily driver. Nothing too crazy, just good vibes.",
+        effects: ['Creative', 'Calm']
+    },
+];
+
+export const FLOWERS_A: Product[] = [
+    {
+        id: 'fl-a-1', title: "Classic Cheese", color: "#FBFF00", image: flowerImg, category: 'flower', grade: 'A',
+        growType: 'Indoor', potency: '20% THC', strength: 'Medium',
+        description: "Old school flavor profile. Reliable potency.",
+        effects: ['Relaxed', 'Hungry']
+    },
+    {
+        id: 'fl-a-2', title: "Lemon Pop", color: "#FBFF00", image: flowerImg, category: 'flower', grade: 'A',
+        growType: 'Indoor', potency: '21% THC', strength: 'Medium',
+        description: "Zesty citrus notes with a balanced hybrid high.",
+        effects: ['Uplifted', 'Energetic']
+    },
+];
+
+export const FLOWERS_AA: Product[] = [
+    {
+        id: 'fl-aa-1', title: "Purple Kush", color: "#BC13FE", image: flower1Img, category: 'flower', grade: 'AA',
+        growType: 'Indoor', potency: '24% THC', strength: 'Heavy',
+        description: "Deep purple hues and a heavy body high. Great for sleep.",
+        effects: ['Sleepy', 'Relaxed']
+    },
+    {
+        id: 'fl-aa-2', title: "Gorilla Glue", color: "#39FF14", image: flower1Img, category: 'flower', grade: 'AA',
+        growType: 'Indoor', potency: '25% THC', strength: 'Heavy',
+        description: "Sticky, pungent, and powerful. Couch-lock warning.",
+        effects: ['Euphoric', 'Sedated']
+    },
+];
+
+export const FLOWERS_AAA: Product[] = [
+    {
+        id: 'fl-aaa-1', title: "Graffiti Glaze", color: "#39FF14", image: flowerImg, category: 'flower', grade: 'AAA',
         growType: 'Indoor', potency: '28% THC', strength: 'Heavy',
-        description: "A potent indica-dominant hybrid with sweet, berry-like flavors and a heavy hitting relaxation effect.",
+        description: "A potent indica-dominant hybrid with sweet, berry-like flavors.",
         effects: ['Relaxed', 'Euphoric', 'Sleepy']
     },
     {
-        id: 'fl-2', title: "Neon Nightcap", color: "#BC13FE", image: flower1Img, category: 'flower',
+        id: 'fl-aaa-2', title: "Neon Nightcap", color: "#BC13FE", image: flower1Img, category: 'flower', grade: 'AAA',
         growType: 'Indoor', potency: '32% THC', strength: 'Nuclear',
-        description: "Our strongest strain. Not for beginners. Expect a mind-bending cerebral high followed by deep sedation.",
-        effects: ['Creative', 'Energetic', 'Focused']
-    },
-    {
-        id: 'fl-3', title: "Street Haze", color: "#FBFF00", image: flower2Img, category: 'flower',
-        growType: 'Greenhouse', potency: '24% THC', strength: 'Medium',
-        description: "A classic Sativa that keeps you moving. Perfect for social situations and creative work.",
-        effects: ['Happy', 'Uplifted', 'Talkative']
-    },
+        description: "Our strongest strain. Not for beginners. Expect a mind-bending cerebral high.",
+        effects: ['Creative', 'Energetic']
+    }
 ];
 
 export const PREROLLS: Product[] = [
     {
         id: 'pr-1', title: "Jet Fuel", color: "#39FF14", image: preRollImg, category: 'preroll',
         growType: 'Indoor', potency: '29% THC', strength: 'Heavy',
-        description: "1g Pre-roll of our famous Jet Fuel. Gas heavy terpenes with a soaring high.",
+        description: "1g Pre-roll of our famous Jet Fuel. Gas heavy terpenes.",
         effects: ['Energetic', 'Euphoric']
     },
     {
@@ -40,19 +85,13 @@ export const PREROLLS: Product[] = [
         description: "Sweet and sedating. Perfect for ending the day.",
         effects: ['Relaxed', 'Sleepy']
     },
-    {
-        id: 'pr-3', title: "Sour Diesel", color: "#FBFF00", image: preRollImg, category: 'preroll',
-        growType: 'Sun-Grown', potency: '20% THC', strength: 'Mild',
-        description: "Old school funk. Mellow high that doesn't overwhelm.",
-        effects: ['Happy', 'Stress-Free']
-    },
 ];
 
 export const EDIBLES: Product[] = [
     {
         id: 'ed-1', title: "Static Gummies", color: "#FBFF00", image: edibleImg, category: 'edible',
         potency: '10mg / pc', strength: 'Medium',
-        description: "Electric lemon flavor. Fast acting nano-emulsified THC for a quick 15-minute onset.",
+        description: "Electric lemon flavor. Fast acting nano-emulsified THC.",
         effects: ['Happy', 'Giggly']
     },
     {
@@ -61,31 +100,19 @@ export const EDIBLES: Product[] = [
         description: "Crunchy chocolate bar with toffee bits. Warning: Highly potent.",
         effects: ['Relaxed', 'Munchies']
     },
-    {
-        id: 'ed-3', title: "Hyper Chews", color: "#39FF14", image: edibleImg, category: 'edible',
-        potency: '5mg / pc', strength: 'Mild',
-        description: "Micro-dose friendly fruit chews. Perfect for maintaining a buzz throughout the day.",
-        effects: ['Focused', 'Calm']
-    },
 ];
 
 export const CBD: Product[] = [
     {
         id: 'cbd-1', title: "Zen Flower", color: "#FFF", image: flower1Img, category: 'cbd',
         growType: 'Greenhouse', potency: '15% CBD', strength: 'Mild',
-        description: "Pure high-CBD flower with less than 0.3% THC. All relaxation, no intoxication.",
+        description: "Pure high-CBD flower with less than 0.3% THC.",
         effects: ['Calm', 'Pain Relief']
     },
     {
         id: 'cbd-2', title: "Recovery Vapes", color: "#EEE", image: vapeImg, category: 'cbd',
         potency: '500mg CBD', strength: 'Medium',
-        description: "Broad spectrum CBD vape pen with added terpenes for recovery.",
+        description: "Broad spectrum CBD vape pen with added terpenes.",
         effects: ['Relaxed', 'Focused']
-    },
-    {
-        id: 'cbd-3', title: "Pure Relief", color: "#DDD", image: flower2Img, category: 'cbd',
-        growType: 'Indoor', potency: '20% CBD', strength: 'Medium',
-        description: "A balanced ratio of CBD to CBG for maximum anti-inflammatory benefits.",
-        effects: ['Soothing', 'Clear-Minded']
     },
 ];

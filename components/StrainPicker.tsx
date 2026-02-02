@@ -106,17 +106,33 @@ export const Budtender: React.FC<BudtenderProps> = ({ onAddToCart }) => {
 
           {step === 3 && (
             <div className="space-y-6">
-              <p className="text-xl body-font mb-4">Taste buds craving?</p>
+              <p className="text-xl body-font mb-4">Taste buds craving? (Pick all that apply)</p>
               <div className="flex flex-wrap justify-center gap-4">
-                {flavors.map(f => (
-                  <button
-                    key={f}
-                    onClick={() => setPrefs({ ...prefs, flavor: f })}
-                    className={`px-6 py-3 bg-black border-2 rounded-full transition-all ${prefs.flavor === f ? 'border-[#FBFF00] bg-[#FBFF00] text-black' : 'border-[#FBFF00] hover:bg-[#FBFF00]/20'}`}
-                  >
-                    {f}
-                  </button>
-                ))}
+                {flavors.map(f => {
+                  const isSelected = Array.isArray(prefs.flavor)
+                    ? prefs.flavor.includes(f)
+                    : prefs.flavor === f;
+
+                  return (
+                    <button
+                      key={f}
+                      onClick={() => {
+                        const currentFlavors = Array.isArray(prefs.flavor) ? prefs.flavor : [prefs.flavor];
+                        const newFlavors = isSelected
+                          ? currentFlavors.filter(flavor => flavor !== f)
+                          : [...currentFlavors, f];
+                        setPrefs({ ...prefs, flavor: newFlavors.length > 0 ? newFlavors : ['Fruity'] });
+                      }}
+                      className={`px-6 py-3 border-2 rounded-full transition-all relative ${isSelected
+                          ? 'border-[#FBFF00] bg-[#FBFF00]/20 text-[#FBFF00]'
+                          : 'border-white/30 text-white hover:border-[#FBFF00]/50 bg-black'
+                        }`}
+                    >
+                      {isSelected && <span className="absolute -top-1 -right-1 text-xs">✓</span>}
+                      {f}
+                    </button>
+                  );
+                })}
               </div>
               <button
                 onClick={handlePredict}

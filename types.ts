@@ -22,6 +22,7 @@ export interface Product {
   color: string;
   image: string;
   category?: 'flower' | 'preroll' | 'edible' | 'cbd' | 'merch';
+  grade?: 'Greenhouse' | 'A' | 'AA' | 'AAA' | 'Top Shelf';
   growType?: 'Indoor' | 'Greenhouse' | 'Sun-Grown';
   potency?: string;
   effects?: string[];
