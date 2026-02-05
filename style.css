@@ -1,0 +1,1060 @@
+/*
+Theme Name: CannaCrazy
+Theme URI: https://cannacrazy.co.za
+Author: CannaCrazy Co.
+Author URI: https://cannacrazy.co.za
+Description: Custom WordPress theme for CannaCrazy Social Club. Optimized for LiteSpeed Cache on Hostinger Business Hosting.
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: cannacrazy
+Tags: cannabis, social-club, e-commerce
+*/
+
+/* ===========================
+   CSS RESET & BASE STYLES
+   =========================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+/* ===========================
+   TYPOGRAPHY
+   =========================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.heading-font {
+    font-family: 'Permanent Marker', cursive;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+.body-font {
+    font-family: 'Inter', sans-serif;
+}
+
+/* ===========================
+   NEON TEXT EFFECTS
+   =========================== */
+.neon-text-green {
+    text-shadow: 0 0 10px #39FF14, 0 0 20px #39FF14;
+    color: #39FF14;
+}
+
+.neon-text-purple {
+    text-shadow: 0 0 10px #BC13FE, 0 0 20px #BC13FE;
+    color: #BC13FE;
+}
+
+.neon-text-yellow {
+    text-shadow: 0 0 10px #FBFF00, 0 0 20px #FBFF00;
+    color: #FBFF00;
+}
+
+.neon-text-blue {
+    text-shadow: 0 0 10px #00D2FF, 0 0 20px #00D2FF;
+    color: #00D2FF;
+}
+
+/* ===========================
+   ANIMATED BACKGROUND
+   =========================== */
+@keyframes gradient-move {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.animated-bg {
+    background: linear-gradient(-45deg, #121212, #1a1a2e, #2e1a47, #121212);
+    background-size: 400% 400%;
+    animation: gradient-move 15s ease infinite;
+}
+
+.shimmer-grid {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* ===========================
+   SCROLLBAR STYLING
+   =========================== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #39FF14;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2de000;
+}
+
+/* ===========================
+   NAVIGATION
+   =========================== */
+.site-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 50;
+    padding: 1.5rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1920px;
+    margin: 0 auto;
+}
+
+.site-logo {
+    font-size: 1.875rem;
+    font-family: 'Permanent Marker', cursive;
+    color: #39FF14;
+    letter-spacing: -0.025em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.site-logo:hover {
+    text-shadow: 0 0 10px #39FF14, 0 0 20px #39FF14;
+}
+
+.main-navigation {
+    display: flex;
+    gap: 2rem;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+}
+
+.main-navigation a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.main-navigation a:hover {
+    color: #39FF14;
+    text-shadow: 0 0 10px #39FF14;
+}
+
+.main-navigation a.current-menu-item {
+    color: #39FF14;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.cart-button {
+    position: relative;
+    padding: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cart-button:hover .cart-icon {
+    text-shadow: 0 0 10px #39FF14, 0 0 20px #39FF14;
+}
+
+.cart-icon {
+    font-size: 1.875rem;
+    transition: all 0.3s ease;
+}
+
+.cart-count {
+    position: absolute;
+    top: -0.25rem;
+    right: -0.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #BC13FE;
+    color: white;
+    font-size: 0.625rem;
+    font-weight: 900;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 2s infinite;
+    border: 2px solid #000;
+}
+
+.join-button {
+    padding: 0.5rem 1.5rem;
+    background-color: #39FF14;
+    color: #000;
+    font-weight: 900;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 4px 4px 0px 0px rgba(255, 255, 255, 1);
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+}
+
+.join-button:hover {
+    transform: scale(1.05);
+}
+
+.join-button:active {
+    transform: scale(0.95);
+}
+
+/* Mobile Navigation */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* ===========================
+   HERO SECTION
+   =========================== */
+.hero-section {
+    position: relative;
+    padding-top: 10rem;
+    padding-bottom: 5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 1536px;
+}
+
+.hero-title {
+    font-size: clamp(3rem, 8vw, 9rem);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.hero-title .highlight {
+    color: #39FF14;
+}
+
+.hero-description {
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    max-width: 1024px;
+    margin: 0 auto 4rem;
+    opacity: 0.8;
+    line-height: 1.8;
+}
+
+.trust-indicator {
+    font-size: 0.875rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.trust-line {
+    width: 3rem;
+    height: 2px;
+    background-color: #39FF14;
+}
+
+/* ===========================
+   INFO BLOCKS
+   =========================== */
+.info-blocks {
+    padding: 8rem 1.5rem;
+    background-color: white;
+    color: black;
+    border-radius: 5rem;
+    margin: 1rem 2.5rem;
+    position: relative;
+    z-index: 20;
+}
+
+.info-grid {
+    max-width: 1536px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3rem;
+}
+
+.info-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.info-icon {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.25rem;
+    transition: transform 0.3s ease;
+}
+
+.info-card:hover .info-icon {
+    transform: rotate(12deg);
+}
+
+.info-card .info-icon.green {
+    background-color: #39FF14;
+    transform: rotate(3deg);
+}
+
+.info-card .info-icon.purple {
+    background-color: #BC13FE;
+    transform: rotate(-3deg);
+    color: white;
+}
+
+.info-card .info-icon.yellow {
+    background-color: #FBFF00;
+    transform: rotate(6deg);
+}
+
+.info-title {
+    font-size: 2.25rem;
+}
+
+.info-description {
+    font-size: 1.125rem;
+    line-height: 1.8;
+}
+
+/* ===========================
+   SHOP SECTIONS
+   =========================== */
+.shop-section {
+    padding: 5rem 1.5rem;
+}
+
+.shop-container {
+    max-width: 1920px;
+    margin: 0 auto;
+}
+
+.section-header {
+    max-width: 1536px;
+    margin: 0 auto 3rem;
+    display: flex;
+    align-items: flex-end;
+    gap: 1.5rem;
+}
+
+.section-title {
+    font-size: clamp(3rem, 6vw, 8rem);
+    color: white;
+}
+
+.section-subtitle {
+    margin-bottom: 1rem;
+    color: #6b7280;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Grade Tunnels */
+.grade-tunnel {
+    margin-bottom: 4rem;
+    border-left: 4px solid;
+    padding-left: 1.5rem;
+}
+
+.grade-tunnel.greenhouse {
+    border-left-color: #FBFF00;
+}
+
+.grade-tunnel.a {
+    border-left-color: rgba(255, 255, 255, 0.5);
+}
+
+.grade-tunnel.aa {
+    border-left-color: #BC13FE;
+}
+
+.grade-tunnel.aaa {
+    border-left-color: #39FF14;
+}
+
+.grade-title {
+    font-size: 1.875rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.grade-badge {
+    font-size: 0.75rem;
+    background-color: #39FF14;
+    color: black;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-weight: 900;
+}
+
+/* Product Scroll */
+.product-scroll {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.product-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.product-card {
+    flex-shrink: 0;
+    width: 350px;
+    background-color: #1a1a1a;
+    border-radius: 2rem;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.product-card:hover {
+    border-color: #39FF14;
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(57, 255, 20, 0.2);
+}
+
+.product-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    /* LiteSpeed optimization: Images use native lazy loading via HTML attribute loading="lazy" */
+}
+
+.product-info {
+    padding: 1.5rem;
+}
+
+.product-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.product-meta {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.product-tag {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background-color: rgba(255, 255, 255, 0.1);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.product-description {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.product-effects {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.effect-tag {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background-color: rgba(57, 255, 20, 0.2);
+    color: #39FF14;
+}
+
+.add-to-cart-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #39FF14;
+    color: black;
+    border: none;
+    border-radius: 1rem;
+    font-weight: 900;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.add-to-cart-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+}
+
+.add-to-cart-btn:active {
+    transform: scale(0.95);
+}
+
+/* ===========================
+   TESTIMONIALS
+   =========================== */
+.testimonials-section {
+    padding: 5rem 1.5rem;
+    overflow: hidden;
+    background-color: #0a0a0a;
+}
+
+.testimonials-header {
+    max-width: 1536px;
+    margin: 0 auto 3rem;
+    text-align: center;
+}
+
+.testimonials-title {
+    font-size: clamp(2.5rem, 5vw, 7rem);
+    margin-bottom: 1rem;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.testimonial-track {
+    display: flex;
+    gap: 1.5rem;
+    animation: scroll-left 40s linear infinite;
+}
+
+.testimonial-track:hover {
+    animation-play-state: paused;
+}
+
+.testimonial-card {
+    flex-shrink: 0;
+    width: 400px;
+    background-color: #111;
+    padding: 2rem;
+    border-radius: 2rem;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+    border-color: #39FF14;
+}
+
+.testimonial-stars {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+.testimonial-stars .star {
+    color: #39FF14;
+    font-size: 1.25rem;
+}
+
+.testimonial-text {
+    font-style: italic;
+    color: #d1d5db;
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+    font-size: 1.125rem;
+}
+
+.testimonial-author {
+    font-family: 'Permanent Marker', cursive;
+    color: #39FF14;
+}
+
+/* ===========================
+   CTA SECTION
+   =========================== */
+.cta-section {
+    padding: 10rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #39FF14;
+    color: black;
+}
+
+.cta-title {
+    font-size: clamp(3rem, 6vw, 9rem);
+    margin-bottom: 2rem;
+    line-height: 1;
+}
+
+.cta-title .highlight {
+    background-color: black;
+    color: #39FF14;
+    padding: 0 1rem;
+}
+
+.cta-description {
+    font-size: 1.5rem;
+    max-width: 672px;
+    margin-bottom: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.cta-button {
+    padding: 1.25rem 2.5rem;
+    background-color: black;
+    color: white;
+    font-weight: 900;
+    font-size: 1.25rem;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 6px 6px 0px 0px rgba(255, 255, 255, 1);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.cta-button:hover {
+    transform: scale(1.05);
+}
+
+.cta-button:active {
+    transform: scale(0.95);
+}
+
+.cta-disclaimer {
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    opacity: 0.6;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* ===========================
+   FOOTER
+   =========================== */
+.site-footer {
+    padding: 2.5rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #6b7280;
+}
+
+.footer-container {
+    max-width: 1536px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+    font-weight: bold;
+    align-items: center;
+}
+
+.footer-links a {
+    color: #6b7280;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #39FF14;
+}
+
+.maps-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.maps-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ===========================
+   MODALS
+   =========================== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: #1a1a1a;
+    border-radius: 2rem;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.modal-close:hover {
+    background-color: #39FF14;
+    color: black;
+}
+
+/* ===========================
+   CART SIDEBAR
+   =========================== */
+.cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 450px;
+    height: 100vh;
+    background-color: #0a0a0a;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 150;
+    transition: right 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-sidebar.active {
+    right: 0;
+}
+
+.cart-header {
+    padding: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-title {
+    font-size: 2rem;
+}
+
+.cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+
+.cart-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #1a1a1a;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.cart-item:hover {
+    border-color: rgba(57, 255, 20, 0.3);
+}
+
+.cart-item-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-title {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+}
+
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.quantity-btn {
+    width: 2rem;
+    height: 2rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quantity-btn:hover {
+    background-color: #39FF14;
+    color: black;
+}
+
+.cart-item-quantity {
+    font-weight: bold;
+    min-width: 2rem;
+    text-align: center;
+}
+
+.remove-item-btn {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 1.25rem;
+    transition: transform 0.2s ease;
+}
+
+.remove-item-btn:hover {
+    transform: scale(1.2);
+}
+
+.cart-footer {
+    padding: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+}
+
+.checkout-btn {
+    width: 100%;
+    padding: 1rem;
+    background-color: #39FF14;
+    color: black;
+    border: none;
+    border-radius: 1rem;
+    font-weight: 900;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.checkout-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(57, 255, 20, 0.5);
+}
+
+.empty-cart {
+    padding: 3rem;
+    text-align: center;
+    color: #6b7280;
+}
+
+/* ===========================
+   MOBILE RESPONSIVENESS
+   =========================== */
+@media (max-width: 768px) {
+    .main-navigation {
+        display: none;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .join-button {
+        display: none;
+    }
+
+    .info-blocks {
+        border-radius: 2rem;
+        margin: 1rem;
+        padding: 4rem 1.5rem;
+    }
+
+    .footer-container {
+        flex-direction: column;
+    }
+
+    .section-subtitle {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .footer-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+/* ===========================
+   UTILITY CLASSES
+   =========================== */
+.hidden {
+    display: none;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* ===========================
+   WORDPRESS ADMIN BAR FIX
+   =========================== */
+body.admin-bar .site-header {
+    top: 32px;
+}
+
+@media (max-width: 782px) {
+    body.admin-bar .site-header {
+        top: 46px;
+    }
+}
+
+/* ===========================
+   LITESPEED CACHE OPTIMIZATION
+   =========================== */
+/* ESI block markers are handled via PHP */
+/* Images use native loading="lazy" attribute */
+/* Critical CSS is inlined via functions.php */
