@@ -41,7 +41,7 @@
         <div class="header-actions">
             <!-- Branded Cart Trigger (CC Logo 1) -->
             <button class="cart-button" onclick="cannaCrazyModals.openPickupModal()" aria-label="<?php esc_attr_e('Reserve / Select', 'cannacrazy'); ?>">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/CC Logo 1.png" alt="Reserve" style="width: 3.5rem; height: 3.5rem; object-fit: contain; filter: drop-shadow(0 0 8px rgba(57, 255, 20, 0.5)); transition: all 0.3s ease;">
+                <img src="<?php echo get_template_directory_uri(); ?>/Images/CC Logo 1.png" alt="Reserve" style="width: 3.5rem; height: 3.5rem; object-fit: contain; filter: drop-shadow(0 0 8px rgba(57, 255, 20, 0.5)); transition: all 0.3s ease;">
             </button>
             <span class="cart-count" id="cart-count" style="display: none;">0</span>
 
