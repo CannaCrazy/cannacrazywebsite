@@ -10,12 +10,11 @@
 <?php wp_body_open(); ?>
 
 <!-- Background Effects Container -->
-<div id="background-effects" class="fixed inset-0 z-0 shimmer-grid"></div>
+<div id="background-effects"></div>
 
-<!-- Navigation Header -->
 <header class="site-header">
     <div class="header-container">
-        <!-- Logo -->
+        <!-- Main Site Logo -->
         <a href="<?php echo esc_url(home_url('/')); ?>" class="site-logo">
             <?php 
             if (has_custom_logo()) {
@@ -26,7 +25,7 @@
             ?>
         </a>
 
-        <!-- Primary Navigation -->
+        <!-- Main Navigation -->
         <nav class="main-navigation" role="navigation" aria-label="<?php esc_attr_e('Primary Menu', 'cannacrazy'); ?>">
             <?php
             wp_nav_menu(array(
@@ -40,11 +39,11 @@
 
         <!-- Header Actions -->
         <div class="header-actions">
-            <!-- Cart Button -->
-            <button class="cart-button" onclick="cannaCrazyCart.toggleCart()" aria-label="<?php esc_attr_e('Open Cart', 'cannacrazy'); ?>">
-                <span class="cart-icon">🛍️</span>
-                <span class="cart-count" id="cart-count" style="display: none;">0</span>
+            <!-- Branded Cart Trigger (CC Logo) -->
+            <button class="cart-button" onclick="cannaCrazyModals.openPickupModal()" aria-label="<?php esc_attr_e('Reserve / Select', 'cannacrazy'); ?>">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/CC Logo Pic.jpeg" alt="Reserve" style="width: 3rem; height: 3rem; object-fit: cover; border-radius: 50%; border: 2px solid #39FF14;">
             </button>
+            <span class="cart-count" id="cart-count" style="display: none;">0</span>
 
             <!-- Join Button -->
             <button class="join-button" onclick="cannaCrazyModals.openJoinModal()">

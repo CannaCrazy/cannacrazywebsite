@@ -172,43 +172,143 @@ get_header();
                 </div>
             </div>
 
-            <!-- PRE-ROLLS -->
+            <!-- SPECIALITY & PINNED STRAINS -->
+            <div>
+                <div class="section-header">
+                    <h2 class="section-title neon-text-purple"><?php esc_html_e('SPECIALITY', 'cannacrazy'); ?></h2>
+                    <div class="section-subtitle">[ <?php esc_html_e('PINNED & EXCLUSIVE', 'cannacrazy'); ?> ]</div>
+                </div>
+                <div class="product-scroll">
+                    <?php
+                    $speciality_query = cannacrazy_get_speciality_products();
+                    if ($speciality_query->have_posts()):
+                        while ($speciality_query->have_posts()): $speciality_query->the_post();
+                            echo cannacrazy_get_product_card(get_the_ID());
+                        endwhile;
+                        wp_reset_postdata();
+                    else:
+                        echo '<p style="color: #6b7280; padding: 2rem;">' . esc_html__('No speciality items pinned at the moment.', 'cannacrazy') . '</p>';
+                    endif;
+                    ?>
+                </div>
+            </div>
+
+            <!-- PRE-ROLLS (Graded) -->
             <div>
                 <div class="section-header">
                     <h2 class="section-title" style="color: #39FF14;"><?php esc_html_e('PRE-ROLLS', 'cannacrazy'); ?></h2>
                 </div>
-                <div class="grade-tunnel" style="border-left-color: #39FF14;">
-                    <h3 class="grade-title" style="color: #39FF14;">
-                        <?php esc_html_e('House Favorites', 'cannacrazy'); ?>
-                    </h3>
-                    <div class="product-scroll" id="prerolls-scroll">
-                        <?php
-                        $preroll_query = cannacrazy_get_products_by_category('preroll');
-                        if ($preroll_query->have_posts()):
-                            while ($preroll_query->have_posts()): $preroll_query->the_post();
-                                echo cannacrazy_get_product_card(get_the_ID());
-                            endwhile;
-                            wp_reset_postdata();
-                        else:
-                            echo '<p style="color: #6b7280; padding: 2rem;">' . esc_html__('No pre-rolls available.', 'cannacrazy') . '</p>';
-                        endif;
-                        ?>
+                
+                <div style="display: flex; flex-direction: column; gap: 4rem;">
+                    <!-- Preroll Greenhouse -->
+                    <div class="grade-tunnel greenhouse">
+                         <h3 class="grade-title" style="color: #FBFF00;"><?php esc_html_e('Greenhouse Pre-Rolls', 'cannacrazy'); ?></h3>
+                         <div class="product-scroll">
+                            <?php
+                            $pr_green = cannacrazy_get_products_by_grade('greenhouse', 'preroll');
+                            if ($pr_green->have_posts()):
+                                while ($pr_green->have_posts()): $pr_green->the_post();
+                                    echo cannacrazy_get_product_card(get_the_ID());
+                                endwhile;
+                                wp_reset_postdata();
+                            else:
+                                echo '<p style="color: #6b7280;">' . esc_html__('No greenhouse pre-rolls available.', 'cannacrazy') . '</p>';
+                            endif;
+                            ?>
+                         </div>
+                    </div>
+
+                    <!-- Preroll Grade A -->
+                    <div class="grade-tunnel a">
+                         <h3 class="grade-title" style="color: rgba(255, 255, 255, 0.5);"><?php esc_html_e('Grade A Pre-Rolls', 'cannacrazy'); ?></h3>
+                         <div class="product-scroll">
+                            <?php
+                            $pr_a = cannacrazy_get_products_by_grade('a', 'preroll');
+                            if ($pr_a->have_posts()):
+                                while ($pr_a->have_posts()): $pr_a->the_post();
+                                    echo cannacrazy_get_product_card(get_the_ID());
+                                endwhile;
+                                wp_reset_postdata();
+                            else:
+                                echo '<p style="color: #6b7280;">' . esc_html__('No Grade A pre-rolls available.', 'cannacrazy') . '</p>';
+                            endif;
+                            ?>
+                         </div>
+                    </div>
+
+                    <!-- Preroll Grade AA -->
+                    <div class="grade-tunnel aa">
+                         <h3 class="grade-title" style="color: #BC13FE;"><?php esc_html_e('Grade AA Pre-Rolls', 'cannacrazy'); ?></h3>
+                         <div class="product-scroll">
+                            <?php
+                            $pr_aa = cannacrazy_get_products_by_grade('aa', 'preroll');
+                            if ($pr_aa->have_posts()):
+                                while ($pr_aa->have_posts()): $pr_aa->the_post();
+                                    echo cannacrazy_get_product_card(get_the_ID());
+                                endwhile;
+                                wp_reset_postdata();
+                            else:
+                                echo '<p style="color: #6b7280;">' . esc_html__('No Grade AA pre-rolls available.', 'cannacrazy') . '</p>';
+                            endif;
+                            ?>
+                         </div>
+                    </div>
+                     
+                    <!-- Preroll Grade AAA -->
+                     <div class="grade-tunnel aaa">
+                         <h3 class="grade-title" style="color: #39FF14;"><?php esc_html_e('Grade AAA Pre-Rolls', 'cannacrazy'); ?></h3>
+                         <div class="product-scroll">
+                            <?php
+                            $pr_aaa = cannacrazy_get_products_by_grade('aaa', 'preroll');
+                            if ($pr_aaa->have_posts()):
+                                while ($pr_aaa->have_posts()): $pr_aaa->the_post();
+                                    echo cannacrazy_get_product_card(get_the_ID());
+                                endwhile;
+                                wp_reset_postdata();
+                            else:
+                                echo '<p style="color: #6b7280;">' . esc_html__('No Grade AAA pre-rolls available.', 'cannacrazy') . '</p>';
+                            endif;
+                            ?>
+                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- EDIBLES -->
+            <!-- VAPES (Placeholder) -->
+            <div>
+                <div class="section-header">
+                    <h2 class="section-title" style="color: #00D2FF;"><?php esc_html_e('VAPES', 'cannacrazy'); ?></h2>
+                </div>
+                <div class="product-scroll">
+                     <?php
+                     $vapes_query = cannacrazy_get_products_by_category('vape');
+                     if ($vapes_query->have_posts()):
+                         while ($vapes_query->have_posts()): $vapes_query->the_post();
+                             echo cannacrazy_get_product_card(get_the_ID());
+                         endwhile;
+                         wp_reset_postdata();
+                     else:
+                        // Placeholder content
+                        echo '<div style="padding: 2rem; border: 1px dashed #333; border-radius: 1rem; width: 100%; text-align: center; color: #666;">Coming Soon...</div>';
+                     endif;
+                     ?>
+                </div>
+            </div>
+
+            <!-- EDIBLES (Sorted by Strength) -->
             <div>
                 <div class="section-header">
                     <h2 class="section-title" style="color: #FBFF00;"><?php esc_html_e('EDIBLES', 'cannacrazy'); ?></h2>
+                    <div class="section-subtitle">[ <?php esc_html_e('SORTED: MILD TO NUCLEAR', 'cannacrazy'); ?> ]</div>
                 </div>
                 <div class="product-scroll">
                     <?php
-                    $edibles_query = cannacrazy_get_products_by_category('edible');
-                    if ($edibles_query->have_posts()):
-                        while ($edibles_query->have_posts()): $edibles_query->the_post();
-                            echo cannacrazy_get_product_card(get_the_ID());
-                        endwhile;
+                    $sorted_edibles = cannacrazy_get_edibles_by_strength();
+                    if (!empty($sorted_edibles)):
+                        foreach ($sorted_edibles as $post):
+                            setup_postdata($post);
+                            echo cannacrazy_get_product_card($post->ID);
+                        endforeach;
                         wp_reset_postdata();
                     else:
                         echo '<p style="color: #6b7280; padding: 2rem;">' . esc_html__('No edibles available.', 'cannacrazy') . '</p>';
@@ -217,8 +317,8 @@ get_header();
                 </div>
             </div>
 
-            <!-- CBD & WELLNESS -->
-            <div>
+            <!-- CBD & WELLNESS (Vault Hidden Example) -->
+            <div class="<?php echo (false) ? 'hidden-feature' : ''; /* Toggle Vault here using CSS class or PHP */ ?>">
                 <div class="section-header">
                     <h2 class="section-title"><?php esc_html_e('CBD & WELLNESS', 'cannacrazy'); ?></h2>
                 </div>
