@@ -417,7 +417,23 @@ const cannaCrazyBudtender = {
         this.addMessageToChat('user', message);
         input.value = '';
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Thinking...';
+
+        // Thinking animation
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.innerHTML = '<span class="thinking-dots">Thinking<span>.</span><span>.</span><span>.</span></span>';
+
+        // Add thinking style if not exists
+        if (!document.getElementById('thinking-style')) {
+            const tStyle = document.createElement('style');
+            tStyle.id = 'thinking-style';
+            tStyle.textContent = `
+                .thinking-dots span { animation: blink 1.4s infinite both; }
+                .thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+                .thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+                @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
+            `;
+            document.head.appendChild(tStyle);
+        }
 
         try {
             // Updated to use consolidated script handle if localized
@@ -438,10 +454,12 @@ const cannaCrazyBudtender = {
             }
         } catch (error) {
             console.error('Budtender error:', error);
-            this.addMessageToChat('ai', 'Sorry, I\'m having trouble connecting right now.');
+            this.addMessageToChat('ai', 'Sorry, I\'m having trouble connecting right now. Please try again later.');
         } finally {
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Send';
+            submitBtn.textContent = originalBtnText;
+            const inputField = document.getElementById('budtender-input');
+            if (inputField) inputField.focus();
         }
     },
 
@@ -511,6 +529,35 @@ const cannaCrazyEffects = {
 };
 
 /* ==========================================================================
+   SCROLL ANIMATIONS
+   ========================================================================== */
+const cannaCrazyAnimations = {
+    init: function () {
+        // Add animation classes to elements
+        const elements = document.querySelectorAll('.product-card, .section-title, .info-card, .grade-title');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        elements.forEach((el, index) => {
+            el.classList.add('fade-in-up');
+            // Stagger delay based on index relative to parent or just random/sequence
+            el.style.transitionDelay = `${(index % 5) * 0.1}s`;
+            observer.observe(el);
+        });
+    }
+};
+
+/* ==========================================================================
    INITIALIZATION
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', function () {
@@ -518,6 +565,7 @@ document.addEventListener('DOMContentLoaded', function () {
     cannaCrazyModals.init();
     cannaCrazyBudtender.init();
     cannaCrazyEffects.init();
+    cannaCrazyAnimations.init();
 
     // Close cart when clicking outside
     document.addEventListener('click', function (e) {
@@ -540,6 +588,17 @@ style.textContent = `
     @keyframes slideOutRight {
         from { transform: translateX(0); opacity: 1; }
         to { transform: translateX(400px); opacity: 0; }
+    }
+    
+    /* Scroll Reveal Animations */
+    .fade-in-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in-up.visible {
+        opacity: 1;
+        transform: translateY(0);
     }
 `;
 document.head.appendChild(style);
