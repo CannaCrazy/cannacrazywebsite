@@ -44,18 +44,21 @@ function cannacrazy_enqueue_assets() {
     wp_enqueue_style('cannacrazy-fonts', 'https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;700&family=Permanent+Marker&display=swap', array(), null);
     
     // Theme stylesheet
-    wp_enqueue_style('cannacrazy-style', get_stylesheet_uri(), array(), '1.1.0');
+    wp_enqueue_style('cannacrazy-style', get_template_directory_uri() . '/style.css', array(), '1.0.1');
     
-    // Concatenated Main JavaScript
-    wp_enqueue_script('cannacrazy-main', get_template_directory_uri() . '/js/main.js', array(), '1.1.0', true);
+    // JavaScript files
+    wp_enqueue_script('cannacrazy-cart', get_template_directory_uri() . '/js/cart.js', array(), '1.0.1', true);
+    wp_enqueue_script('cannacrazy-modals', get_template_directory_uri() . '/js/modals.js', array(), '1.0.1', true);
+    wp_enqueue_script('cannacrazy-budtender', get_template_directory_uri() . '/js/budtender.js', array(), '1.0.1', true);
+    wp_enqueue_script('cannacrazy-effects', get_template_directory_uri() . '/js/background-effects.js', array(), '1.0.1', true);
     
-    // Localize script for AJAX & Settings
-    wp_localize_script('cannacrazy-main', 'cannaCrazyAjax', array(
+    // Localize script for AJAX
+    wp_localize_script('cannacrazy-cart', 'cannaCrazyAjax', array(
         'ajaxurl' => admin_url('admin-ajax.php'),
         'nonce' => wp_create_nonce('cannacrazy_nonce'),
     ));
     
-    wp_localize_script('cannacrazy-main', 'cannaCrazyBudtender', array(
+    wp_localize_script('cannacrazy-budtender', 'cannaCrazyBudtender', array(
         'ajaxurl' => admin_url('admin-ajax.php'),
         'nonce' => wp_create_nonce('cannacrazy_budtender_nonce'),
         'restUrl' => rest_url('cannacrazy/v1/'),
@@ -332,29 +335,18 @@ add_action('save_post', 'cannacrazy_purge_product_cache');
  * ===========================
  */
 
-// Get products by grade and optional category
-function cannacrazy_get_products_by_grade($grade_slug, $category_slug = '', $limit = -1) {
-    $tax_query = array(
-        'relation' => 'AND',
-        array(
-            'taxonomy' => 'product_grade',
-            'field'    => 'slug',
-            'terms'    => $grade_slug,
-        ),
-    );
-
-    if (!empty($category_slug)) {
-        $tax_query[] = array(
-            'taxonomy' => 'product_category',
-            'field'    => 'slug',
-            'terms'    => $category_slug,
-        );
-    }
-
+// Get products by grade (optimized for LiteSpeed)
+function cannacrazy_get_products_by_grade($grade_slug, $limit = -1) {
     $args = array(
         'post_type'      => 'product',
         'posts_per_page' => $limit,
-        'tax_query'      => $tax_query,
+        'tax_query'      => array(
+            array(
+                'taxonomy' => 'product_grade',
+                'field'    => 'slug',
+                'terms'    => $grade_slug,
+            ),
+        ),
         'meta_query'     => array(
             array(
                 'key'     => '_product_in_stock',
@@ -369,77 +361,6 @@ function cannacrazy_get_products_by_grade($grade_slug, $category_slug = '', $lim
     // Allow filtering for API integration
     $args = apply_filters('cannacrazy_product_query_args', $args, $grade_slug);
     
-    return new WP_Query($args);
-}
-
-// Get products ordered by custom strength order
-function cannacrazy_get_edibles_by_strength($limit = -1) {
-    // We want to fetch all edibles and verify their strength manually or via meta query
-    // But since we can't easily sort by custom string values in SQL ('Mild' < 'Medium'),
-    // We will do a meta key query and sort in PHP? Or just fetch specific strengths in order?
-    // Fetching in order of strength groups is safer for display.
-    
-    // Let's return an array of queries or products? 
-    // The user wants "Order them visually". A single grid sorted?
-    // Let's try to get all and sort.
-    
-    $args = array(
-        'post_type'      => 'product',
-        'posts_per_page' => $limit,
-        'tax_query'      => array(
-            array(
-                'taxonomy' => 'product_category',
-                'field'    => 'slug',
-                'terms'    => 'edible',
-            ),
-        ),
-        'meta_query'     => array(
-            array(
-                'key'     => '_product_in_stock',
-                'value'   => '1',
-                'compare' => '=',
-            ),
-        ),
-    );
-    
-    $query = new WP_Query($args);
-    $products = $query->posts;
-    
-    // Define strength order
-    $strength_order = array('Mild' => 1, 'Medium' => 2, 'Heavy' => 3, 'Nuclear' => 4);
-    
-    usort($products, function($a, $b) use ($strength_order) {
-        $s1 = get_post_meta($a->ID, '_product_strength', true);
-        $s2 = get_post_meta($b->ID, '_product_strength', true);
-        
-        $o1 = isset($strength_order[$s1]) ? $strength_order[$s1] : 99;
-        $o2 = isset($strength_order[$s2]) ? $strength_order[$s2] : 99;
-        
-        return $o1 - $o2;
-    });
-    
-    return $products; // Returns array of post objects, not WP_Query
-}
-
-// Get pinned/speciality products
-function cannacrazy_get_speciality_products($limit = -1) {
-    $args = array(
-        'post_type'      => 'product',
-        'posts_per_page' => $limit,
-        'meta_query'     => array(
-            'relation' => 'AND',
-            array(
-                'key'     => '_product_in_stock',
-                'value'   => '1',
-                'compare' => '=',
-            ),
-            array(
-                'key'     => '_is_pinned',
-                'value'   => '1',
-                'compare' => '=',
-            )
-        ),
-    );
     return new WP_Query($args);
 }
 

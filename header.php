@@ -10,22 +10,26 @@
 <?php wp_body_open(); ?>
 
 <!-- Background Effects Container -->
-<div id="background-effects"></div>
+<div id="background-effects" class="fixed inset-0 z-0 shimmer-grid"></div>
 
+<!-- Navigation Header -->
 <header class="site-header">
     <div class="header-container">
-        <!-- Main Site Logo -->
+        <!-- Logo -->
         <a href="<?php echo esc_url(home_url('/')); ?>" class="site-logo">
             <?php 
-            if (has_custom_logo()) {
-                the_custom_logo();
+            $logo_path = get_template_directory() . '/images/Images/CC Logo 1.png';
+            $logo_url = get_template_directory_uri() . '/images/Images/CC Logo 1.png';
+            
+            if (file_exists($logo_path)) {
+                echo '<img src="' . esc_url($logo_url) . '" alt="' . get_bloginfo('name') . '" class="site-logo-img" style="max-height: 50px;">';
             } else {
                 echo 'CannaCrazy';
             }
             ?>
         </a>
 
-        <!-- Main Navigation -->
+        <!-- Primary Navigation -->
         <nav class="main-navigation" role="navigation" aria-label="<?php esc_attr_e('Primary Menu', 'cannacrazy'); ?>">
             <?php
             wp_nav_menu(array(
@@ -39,11 +43,11 @@
 
         <!-- Header Actions -->
         <div class="header-actions">
-            <!-- Branded Cart Trigger (CC Logo 1) -->
-            <button class="cart-button" onclick="cannaCrazyModals.openPickupModal()" aria-label="<?php esc_attr_e('Reserve / Select', 'cannacrazy'); ?>">
-                <img src="<?php echo get_template_directory_uri(); ?>/Images/CC Logo 1.png" alt="Reserve" style="width: 3.5rem; height: 3.5rem; object-fit: contain; filter: drop-shadow(0 0 8px rgba(57, 255, 20, 0.5)); transition: all 0.3s ease;">
+            <!-- Cart Button -->
+            <button class="cart-button" onclick="cannaCrazyCart.toggleCart()" aria-label="<?php esc_attr_e('Open Cart', 'cannacrazy'); ?>">
+                <span class="cart-icon">🛍️</span>
+                <span class="cart-count" id="cart-count" style="display: none;">0</span>
             </button>
-            <span class="cart-count" id="cart-count" style="display: none;">0</span>
 
             <!-- Join Button -->
             <button class="join-button" onclick="cannaCrazyModals.openJoinModal()">
